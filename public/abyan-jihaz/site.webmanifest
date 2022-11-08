@@ -1,0 +1,21 @@
+{
+    "name": "abyan Jihaz app",
+    "short_name": "Abyan Jihaz",
+    "start_url": "/abyan-jihaz/pengguna/auth",
+    "scope": "/abyan-jihaz/pengguna",
+    "icons": [
+        {
+            "src": "/static/abyan-jihaz/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/static/abyan-jihaz/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}

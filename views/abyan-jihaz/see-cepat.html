@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melihat hasil</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/abyan-jihaz/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/abyan-jihaz/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/abyan-jihaz/favicon-16x16.png">
+    <link rel="manifest" href="/static/abyan-jihaz/site.webmanifest">
+    <link rel="mask-icon" href="/static/abyan-jihaz/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50">
+
+        <div class="mx-auto mt-16 md:w-3/5 w-11/12">
+            <div class="text-center">
+                <img src="/static/abyan-jihaz.jpg" alt="abyan-jihaz logo" width="96" class="text-center mx-auto"/>
+                <label class="text-sm text-center font-medium text-gray-900 dark:text-gray-300">Solusi Bimbel Anda</label>
+            </div>
+
+            <div class="mt-8">
+                <div class="text-lg text-slate-900 m-4">pencarian hasil : <span class="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800" id="cepat"></span></div>
+                
+                
+                <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">
+                                    Nama
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    poin
+                                </th>
+                                <th scope="col" class="py-3 px-6">
+                                    speed
+                                </th>
+
+                                <th scope="col" class="py-3 px-6">
+                                    <span class="sr-only">Edit</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="result">
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-modal h-full">
+        </div>
+        <div id="open" class="hidden fixed z-50 bottom-0 w-full bg-white rounded-t-lg shadow hover:shadow-lg transition-all duration-500 ease-in-out p-3 max-h-full overflow-y-auto">
+                <div class="bg-gray-200 rounded-full h-1 w-1/5 mx-auto" id="close"></div>
+                <div id="original" class="mt-2 text-3xl font-bold text-center"></div>
+                <div id="list" class="mt-3 h-5/6 max-h-full overflow-y-auto">
+
+                </div>
+        </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if(!window.localStorage.getItem('zilas@partner:abyan-jihaz')) return window.location.replace(window.location.origin + '/abyan-jihaz/')
+
+            fetch(window.location.pathname + '/get').then(res => res.json()).then(res => {
+                document.getElementById('cepat').innerText = res.original;
+                const y = [];
+                res.data.forEach((e,k) => {
+                    y.push(`
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            ${e.name}
+                        </th>
+                        <td class="py-4 px-6">
+                            ${e.poin}
+                        </td>
+                        <td class="py-4 px-6">
+                            ${e.time} ms
+                        </td>
+                        <td class="py-4 px-6 text-right">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline see">Lihat</a>
+                            <a href="/abyan-jihaz/admin/cepat/see/${e.idcepat}/remove/key/${k}" class="font-medium text-red-600 dark:text-red-500 hover:underline remove">Hapus</a>
+                        </td>
+                    </tr>
+                    `)
+                })
+                document.getElementById('result').innerHTML = y.join('')
+                document.querySelectorAll('.see').forEach((o, k) => {
+                    o.addEventListener('click', () => {
+                        document.getElementById('defaultModal').classList.toggle('hidden')
+                        document.getElementById('open').classList.toggle('hidden')
+
+                        reload(k, res)
+                    })
+                })
+                
+                document.getElementById('defaultModal').addEventListener('click', (t) => {
+                    t.target.classList.toggle('hidden')
+                    document.getElementById('open').classList.toggle('hidden')
+                })
+                document.getElementById('close').addEventListener('click', (t) => {
+                    document.getElementById('list').innerHTML = ''
+                    document.getElementById('defaultModal').classList.toggle('hidden')
+                    document.getElementById('open').classList.toggle('hidden')
+                })
+
+            })
+        })
+
+        function reload(k, res) {
+            const y = []
+            const ori = res.original;
+            const sori = ori.split('');
+
+            res.data[0].data.forEach(r => {
+                const indexV = sori[r[1]];
+                if(r[0].includes(indexV)) {
+                    y.push(tFail(r[0] + '> answer is ' + indexV))
+
+                } else {
+                    y.push(tSuccess(r[0] + '> answer is ' + indexV))
+
+                }
+            })
+            document.getElementById('original').innerHTML = ori
+            document.getElementById('list').innerHTML = y.join('')
+
+        }
+        function tSuccess(text) {
+            return `
+                <div class="bg-green-200 text-green-600 rounded-full m-2 px-4 py-2"> 
+                    ${text}
+                </div>
+            `
+        }
+        function tFail(text) {
+            return `
+                <div class="bg-red-200 text-red-600 rounded-full m-2 px-4 py-2"> 
+                    ${text}
+                </div>
+            `
+        }
+    </script>
+</body>
+</html>

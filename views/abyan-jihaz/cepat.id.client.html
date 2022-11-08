@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sedang memuat</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/abyan-jihaz/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/abyan-jihaz/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/abyan-jihaz/favicon-16x16.png">
+    <link rel="manifest" href="/static/abyan-jihaz/site.webmanifest">
+    <link rel="mask-icon" href="/static/abyan-jihaz/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-slate-50">
+    <div class="text-center mt-16 mb-3">
+        <img src="/static/abyan-jihaz.jpg" alt="abyan-jihaz logo" width="96" class="text-center mx-auto"/>
+        <label class="text-sm text-center font-medium text-gray-900 dark:text-gray-300">Solusi Bimbel Anda</label>
+    </div>
+    <div class="bg-white rounded-lg mx-auto w-11/12 md:w-4/5 shadow p-5 text-xl">
+        <div id="text" class="text-xl"></div>
+
+        <div class="mt-4 bg-slate-100 rounded-md py-4">
+            <div id="finding" class="text-5xl mb-3 tracking-widest text-center"></div>
+            <div id="check"></div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-3">
+            <div class="bg-purple-600 h-2.5 rounded-full dark:bg-purple-500 progress transition-all duration-200 ease-in-out" style="width: 45%;"></div>
+        </div>
+        <div class="mt-4">Timer : <span class="timer"></span></div>
+    </div>
+    
+<div id="result" class="hidden overflow-x-auto relative mt-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6 rounded-l-lg">
+                    Timer
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Poin
+                </th>
+                <th scope="col" class="py-3 px-6 rounded-r-lg">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white dark:bg-gray-800">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    123 ms
+                </th>
+                <td class="py-4 px-6">
+                    80
+                </td>
+                <td class="py-4 px-6">
+                    <a href="#" class="text-blue-500"> Save me </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+    <div id="defaultModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full inset-0 h-modal h-full text-center items-center flex justify-center" style="background-color: rgb(0,0,0, .1);">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto mx-auto text-center flex justify-center">
+            <div>
+                <button type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 flex repeating">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg> Ulangi
+                </button>
+                <button type="button" class="text-white bg-gradient-to-r from-lime-500 via-lime-600 to-lime-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 shadow-lg shadow-lime-500/50 dark:shadow-lg dark:shadow-lime-800/80 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 flex finish">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                       Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.111.0&features=es2022%2CDocument%2CJSON%2CHTMLDocument%2CString.prototype.includes%2CSymbol.replace%2CWindow%2Cdocument%2Cfetch%2CArray.prototype.includes%2CArray.prototype.findIndex"></script>
+    <script>
+        var yourA = [];
+        var gyourA = []
+        var repeat = 0;
+        var timer;
+        window.addEventListener('DOMContentLoaded', () => {
+
+            fetch(window.location.pathname +'/get').then(res => res.json()).then(data => {
+                const h = data.text;
+                if(h == null) return alert('Data tidak valid')
+                const hl = h.length;
+                const soal = getS(50, h)
+                const y = document.getElementById('check')
+                y.classList.add('grid')
+                y.classList.add('grid-cols-'+ hl)
+                y.classList.add('gap-'+ hl)
+                test(0, soal, hl-1, h)
+                let c = 0;
+                timer = setInterval(() => {
+                    document.querySelector('.timer').innerText = c;
+                    c++;
+                }, 10)
+            })
+        })
+        function test(index, data, length, original) {
+
+            if(data.length == index) return endGame(original)
+            document.querySelector('.progress').style = "width :"+ index*2 +'%';
+            const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+            const h = data[index].f + data[index].t.join('');
+            const ori = original.split('')
+            const y = h.split('')
+            const th = [];
+            const tr = [];
+            const ip = [];
+            for(let i =0; i<length; i++) {
+                th.push(`<th scope="col" class="py-3 px-6 border text-center">${A[i]}</th>`)
+                tr.push(`<td class="py-4 px-6 border text-center"> ${ori[i]} </td>`)
+                ip.push(`
+                <div class="text-center">
+                    <input id="default-radio-${i+1}" type="radio" value="" name="radio-${index+1}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 tester">
+                    <br><label for="default-radio-${i+1}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">${A[i]}</label>
+                </div>
+                `)
+            }
+            th.push(`<th scope="col" class="py-3 px-6 border text-center">${A[length]}</th>`)
+            tr.push(`<td class="py-4 px-6 border text-center"> ${ori[length]} </td>`)
+            ip.push(`
+                <div class="text-center">
+                    <input id="default-radio-${length+1}" type="radio" value="" name="radio-${index+1}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 tester">
+                    <br><label for="default-radio-${length+1}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">${A[length]}</label>
+                </div>
+                `)
+            const table = `
+            <div class="overflow-x-auto relative">
+                <table class="w-full mx-auto text-xl border text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+                        <tr class="border"> ${th.join('')} </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800">
+                        <tr> ${tr.join('')} </tr>
+                    </tbody>
+                </table>
+            </div>
+            `
+            const input = data[index].t.join('')
+            const check = ip.join('')
+
+            document.getElementById('text').innerHTML = table
+            document.getElementById('finding').innerHTML = input
+            document.getElementById('check').innerHTML = check
+
+            document.querySelectorAll('.tester').forEach((p, pk) => {
+                p.addEventListener('change', ya => {
+                    if(ya.target.checked) {
+                        yourA.push([input, pk])
+                        setTimeout(() => {
+                            test(index+1, data, length, original)
+                        }, 100)
+                    }
+                })
+            })
+        }
+        function rand(t) {
+            return t.split('').sort((a,b) => Math.random() - .5).join('')
+        }
+        function removeFirst(text) {
+            const g = rand(text).split('')
+            const f = g[0]
+            g.splice(0,1)
+            return {f, t : g}
+        }
+        function getS(l, j) {
+            const h = [];
+            for(let i =0; i<l ; i++) {
+                h.push(removeFirst(j))
+            }
+            return h
+        }
+        function store(a, i, data, length, original) {
+            yourA.push(a)
+            test(i, data, length, original)
+        }
+        function endGame(original) {
+            clearInterval(timer);
+            document.getElementById('defaultModal').classList.toggle('hidden')
+            const h = window.location.pathname
+            const hs = h.split('/')
+            const id = hs[4];
+            const idcepat = hs[7];
+            const cepat = window.localStorage.getItem('zilas@partner:abyan-jihaz:client:cepat:'+idcepat)
+            const getTime = document.querySelector('.timer').innerText;
+            const oriRay = original.split('')
+            let poin = 0;
+            yourA.forEach(t => {
+                const findIndexOri = oriRay[t[1]]
+                if(!t[0].includes(findIndexOri)) {
+                    poin++;
+                }
+            })
+            const saveDataMe = {time : getTime, data : yourA, poin}
+            if(!cepat) {
+                window.localStorage.setItem('zilas@partner:abyan-jihaz:client:cepat:'+idcepat, JSON.stringify([saveDataMe]))
+                return;
+            }
+            
+            const decodecepat = JSON.parse(cepat)
+            decodecepat.push(saveDataMe)
+            window.localStorage.setItem('zilas@partner:abyan-jihaz:client:cepat:'+idcepat, JSON.stringify(decodecepat))
+
+            yourA = [];
+        }
+
+        document.querySelector('.repeating').addEventListener('click', (e) => window.location.reload())
+        document.querySelector('.finish').addEventListener('click', (e) => {
+            document.getElementById('defaultModal').classList.toggle('hidden')
+            const h = window.location.pathname
+            const hs = h.split('/')
+            const id = hs[4];
+            const idcepat = hs[7];
+            const cepat = window.localStorage.getItem('zilas@partner:abyan-jihaz:client:cepat:'+idcepat)
+            viewResult(JSON.parse(cepat), id, idcepat)
+            
+        })
+
+        function viewResult(data, iduser, idcepat) {
+            const j = [];
+            data.forEach((e, ke) => {
+                j.push(`
+                <tr class="bg-white dark:bg-gray-800">
+                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        ${e.time}0 ms
+                    </th>
+                    <td class="py-4 px-6">
+                        ${e.poin}
+                    </td>
+                    <td class="py-4 px-6">
+                        <a href="#" class="text-blue-500 saveSureMe" data-key="${ke}"> Simpan </a>
+                        <a href="#" class="text-red-500 removeSureMe" data-key="${ke}"> Hapus </a>
+                    </td>
+                </tr>
+                `)
+            })
+
+            document.querySelector('#result').classList.remove('hidden')
+            document.querySelector('#result table tbody').innerHTML = j.join('')
+            document.querySelectorAll('.saveSureMe').forEach((r,kr) => {
+                r.addEventListener('click', () => {
+                    const selectedData = data[kr]
+                    selectedData.iduser = iduser
+                    selectedData.idcepat = idcepat
+                    fetch(window.location.pathname + '/savedata', {
+                        method : "POST",
+                        headers : {"Content-Type" : "application/json"},
+                        body : JSON.stringify(selectedData)
+                    }).then(res=>res.json()).then(da => {
+                        if(da.ok) return alert('Berhasil Di berikan ke tentor anda')
+                        alert('gagal beritahu tentor anda')
+                    })
+                })
+            })
+            document.querySelectorAll('.removeSureMe').forEach((r,kr) => {
+                r.addEventListener('click', () => {
+                    const key = r.dataset.key;
+                    data.splice(key, 1)
+                    window.localStorage.setItem('zilas@partner:abyan-jihaz:client:cepat:'+idcepat, JSON.stringify(data))
+                    viewResult(data, iduser, idcepat)
+                })
+            })
+        }
+    </script>
+</body>
+</html>
